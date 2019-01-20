@@ -1,3 +1,5 @@
+IMAGE=dakl/particle-relay-hub-handler
+
 run:
 	watchmedo auto-restart python run.py --patterns="*.py" --recursive
 
@@ -11,7 +13,7 @@ lint:
 test: unit-test lint
 
 build:
-	docker build -t dakl/particle-relay-hub-api .
+	docker build -t ${IMAGE} .
 
 push:
-	docker push dakl/particle-relay-hub-api
+	docker push ${IMAGE}

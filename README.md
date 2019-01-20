@@ -6,13 +6,13 @@
 python run.py
 ~~~
 
-# Deplotyment
+# Deployment
 
 ## Build & push
 
 ~~~bash
-docker build -t dakl/particle-relay-hub-api .
-docker push dakl/particle-relay-hub-api
+docker build -t dakl/particle-relay-hub-handler .
+docker push dakl/particle-relay-hub-handler
 ~~~
 
 ## Run Container
@@ -22,8 +22,7 @@ docker run \
 -e RELAY_HUB_DEVICE_ID=(echo $RELAY_HUB_DEVICE_ID) \
 -e LEGO_HOUSE_DEVICE_ID=(echo $LEGO_HOUSE_DEVICE_ID) \
 -e PARTICLE_ACCESS_TOKEN=(echo $PARTICLE_ACCESS_TOKEN) \
--p 8000:8000 \
-dakl/particle-relay-hub-api
+dakl/particle-relay-hub-handler
 ~~~
 
 ## Run in swarm
@@ -35,9 +34,9 @@ docker service create \
 -e RELAY_HUB_DEVICE_ID=(echo $RELAY_HUB_DEVICE_ID) \
 -e LEGO_HOUSE_DEVICE_ID=(echo $LEGO_HOUSE_DEVICE_ID) \
 -e PARTICLE_ACCESS_TOKEN=(echo $PARTICLE_ACCESS_TOKEN) \
--p 8000:8000 \
-dakl/particle-relay-hub-api
+dakl/particle-relay-hub-handler
 ~~~
 
 # CI
-Should build and push image. TBD.
+
+Builds and pushes the image. Webhook for continuous deployment is TBD.
