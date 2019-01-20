@@ -1,4 +1,4 @@
-from requests import post
+from app.request import PostRequestFactory
 
 from app import config
 from .base import Accessory
@@ -11,7 +11,8 @@ class LegoHouseLight(Accessory):
                  device_id=None,
                  access_token=None,
                  base_url=None,
-                 headers=None):
+                 headers=None,
+                 request_factory=None):
         self.name = name
         self.internal_id = internal_id
         self.device_id = device_id or config.LEGO_HOUSE_DEVICE_ID
@@ -20,6 +21,8 @@ class LegoHouseLight(Accessory):
         self.headers = headers or {
             "Content-type": "application/x-www-form-urlencoded"
         }
+        self.request_factory = request_factory or PostRequestFactory()
+
         if not self.device_id:
             raise ValueError(
                 'Need to set LEGO_HOUSE_DEVICE_ID in the environment')
@@ -39,7 +42,8 @@ class LegoHouseLight(Accessory):
             'access_token': self.access_token,
             'args': f'{self.internal_id},{state}'
         }
-        return post(url, data=payload, headers=self.headers).json()
+        return self.request_factory.create(
+            url, payload=payload, headers=self.headers)
 
     def set_state(self, state: int) -> bool:
         response = self._set_state(state)
@@ -54,6 +58,7 @@ class LegoHouseLight(Accessory):
             'access_token': self.access_token,
             'args': f'{self.internal_id}'
         }
-        resp = post(url, data=payload, headers=self.headers).json()
+        resp = self.request_factory.create(
+            url, payload=payload, headers=self.headers)
 
         return int(resp.get('return_value'))
