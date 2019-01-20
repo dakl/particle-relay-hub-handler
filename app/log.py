@@ -1,5 +1,10 @@
+import config
 import logging
 
 
 def setup_logging():
-    logging.basicConfig(level=logging.DEBUG)
+    if config.DEBUG:
+        level = logging.DEBUG
+    else:
+        level = logging.INFO
+    logging.basicConfig(level=level)
