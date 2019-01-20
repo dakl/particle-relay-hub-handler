@@ -13,18 +13,20 @@ logger.info("Starting particle-relay-hub-api")
 def on_connect(client, userdata, flags, rc):
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
-    client.subscribe('commands/window/switch/#')
-    client.subscribe('commands/lego/switch/#')
+    client.subscribe('commands/relay/#')
     logger.info("Connected", rc=str(rc))
 
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, message):
     payload = str(message.payload.decode("utf-8")).strip()
-    logger.info("Payload parsed", payload=payload)
     accessory_id = int(message.topic.split('/')[-1])
+    logger.info('Message recieved', topic=message.topic, payload=payload)
+
     accessory = ACCESSORIES.get(accessory_id)
     accessory.handler(payload=payload)
+    client.publish(
+        topic=f'events/relay/{accessory_id}', payload=payload, retain=True)
 
 
 client = mqtt.Client()
