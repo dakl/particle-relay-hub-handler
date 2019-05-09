@@ -8,19 +8,19 @@ ACCESSORIES: Dict[int, Accessory] = {
     1:
     Relay(
         name='relay-hub-1',
-        internal_id='r1'),
+        internal_id='1'),
     2:
     Relay(
         name='relay-hub-2',
-        internal_id='r2'),
+        internal_id='2'),
     3:
     Relay(
         name='relay-hub-3',
-        internal_id='r3'),
+        internal_id='3'),
     4:
     Relay(
         name='relay-hub-4',
-        internal_id='r4'),
+        internal_id='4'),
     5:
     LegoHouseLight(
         name='lego-house-0',
