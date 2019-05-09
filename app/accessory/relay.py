@@ -6,8 +6,8 @@ from .base import Accessory
 
 class Relay(Accessory):
     STATE_MAP = {
-        1: 'HIGH',
-        0: 'LOW',
+        1: '1',
+        0: '0',
     }
 
     def __init__(self,
