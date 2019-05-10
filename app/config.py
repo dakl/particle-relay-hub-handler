@@ -8,6 +8,7 @@ class Config:
     PARTICLE_BASE_URL = 'https://api.particle.io/v1/devices'
     BROKER = 'worker0'
     DEBUG = os.getenv('DEBUG', False)
+    TOPIC_NAME = os.getenv('TOPIC_NAME', None)
 
     def __init__(self):
         self.RELAY_HUB_DEVICE_ID = self.get_secret('RELAY_HUB_DEVICE_ID')
