@@ -41,19 +41,19 @@ class Relay(Accessory):
     def _get_url(self, endpoint):
         return f"{self.base_url}/{self.device_id}/{endpoint}"
 
-    def _set_state(self, state_string):
+    async def _set_state(self, state_string):
         url = self._get_url(endpoint='relay')
         payload = {
             'access_token': self.access_token,
             'args': f'{self.internal_id},{state_string}'
         }
-        return self.request_factory.create(
+        return await self.request_factory.create(
             url, payload=payload, headers=self.headers)
 
-    def set_state(self, state: int) -> bool:
+    async def set_state(self, state: int) -> bool:
         state_string = self.STATE_MAP.get(state, None)
         if state_string:
-            response = self._set_state(state_string)
+            response = await self._set_state(state_string)
             if response.get('return_value') == 1:
                 return True
             else:

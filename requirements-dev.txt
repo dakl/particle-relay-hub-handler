@@ -6,3 +6,5 @@ mypy
 pytest
 watchdog
 yapf
+flask
+requests

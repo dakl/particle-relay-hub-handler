@@ -1,8 +1,13 @@
-from requests import post
+import httpx
+#from requests import post
 
+import structlog
+logger = structlog.getLogger(__name__)
 
 class PostRequestFactory:
-    def create(self, url, payload, headers=None):
+    async def create(self, url, payload, headers=None):
         if not headers:
             headers = {}
-        return post(url, data=payload, headers=headers).json()
+        response = await httpx.post(url, data=payload, headers=headers)
+        logger.info('API Responed', status=response.status_code)
+        return response.json()

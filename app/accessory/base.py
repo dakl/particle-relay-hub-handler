@@ -15,8 +15,9 @@ class Accessory(ABC):
     def get_state(self) -> int:
         raise NotImplementedError()
 
-    def handler(self, payload):
-        if payload == 'ON':
-            self.set_state(1)
-        elif payload == 'OFF':
-            self.set_state(0)
+    async def handler(self, payload):
+        message = payload.decode('utf-8')
+        if message == 'ON':
+            await self.set_state(1)
+        elif message == 'OFF':
+            await self.set_state(0)
