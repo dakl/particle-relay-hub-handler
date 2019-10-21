@@ -16,7 +16,4 @@ class Accessory(ABC):
         raise NotImplementedError()
 
     def handler(self, payload):
-        if payload == 'ON':
-            self.set_state(1)
-        elif payload == 'OFF':
-            self.set_state(0)
+        self.set_state(payload)

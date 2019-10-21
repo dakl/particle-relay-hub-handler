@@ -3,11 +3,14 @@ from app.request import PostRequestFactory
 
 from .base import Accessory
 
+import structlog
+logger = structlog.getLogger(__name__)
+
 
 class Relay(Accessory):
     STATE_MAP = {
-        1: '1',
-        0: '0',
+        'ON': '1',
+        'OFF': '0',
     }
 
     def __init__(self,
@@ -47,8 +50,9 @@ class Relay(Accessory):
             'access_token': self.access_token,
             'args': f'{self.internal_id},{state_string}'
         }
-        return self.request_factory.create(
-            url, payload=payload, headers=self.headers)
+        return self.request_factory.create(url,
+                                           payload=payload,
+                                           headers=self.headers)
 
     def set_state(self, state: int) -> bool:
         state_string = self.STATE_MAP.get(state, None)
@@ -67,7 +71,8 @@ class Relay(Accessory):
             'access_token': self.access_token,
             'args': f'{self.internal_id}'
         }
-        resp = self.request_factory.create(
-            url, payload=payload, headers=self.headers)
+        resp = self.request_factory.create(url,
+                                           payload=payload,
+                                           headers=self.headers)
 
         return int(resp.get('return_value'))
